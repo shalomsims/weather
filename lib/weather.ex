@@ -1,4 +1,5 @@
 defmodule Weather do
+  # function for converting to fahrenheit from celcius
   def to_fahrenheit(celcius) do
     celcius = celcius * 9/5 + 32
     celcius
@@ -29,6 +30,7 @@ defmodule Weather do
     # Return array of daily weather per city with pattern matching
     [data1, data2, data3, data4, data5, data6] = Poison.decode!(body)["consolidated_weather"]
     # Loop through array using recursion
+    # Create an list of max_temps
     data = [
       data1["max_temp"],
       data2["max_temp"],
@@ -43,6 +45,8 @@ defmodule Weather do
       Enum.reduce(data, 0, fn x, total ->
         (x + total) / 6 |> Float.ceil(2) # Round to 2 decimal places
       end)
+
+    # Convert to F
     sum = to_fahrenheit(sum)
     "The average max temperature of #{city} is: #{sum} degrees."
   end
